@@ -40,7 +40,7 @@ int main()
 		<= : 왼쪽 항의 값이 오른쪽 항의 값보다 작거나 같으면 참을 반환한다.
 		>= : 왼쪽 항의 값이 오른쪽 항의 값보다 크거나 같으면 참을 반환한다.
 		== : 왼쪽 항의 값과 오른쪽 항의 값이 같을 때, 참을 반환한다.
-		!= : 왼쪽 항의 값과 오른쪽 항의 값이 다를 떄, 참을 반환한다.
+		!= : 왼쪽 항의 값과 오른쪽 항의 값이 다를 때, 참을 반환한다.
 
 		
 	*/
@@ -61,7 +61,7 @@ int main()
 
 	cout << "나이를 입력해주세요: ";
 	cin >> customerAge;
-	boolean = customerAge <= 19;
+	boolean = customerAge <= 19;	
 	cout << "고객님은 미성년자 " << boolean << " 입니다" << endl;
 
 	boolean = customerAge == 20;
@@ -99,6 +99,4 @@ int main()
 	//left_value %= right_value;
 	//cout << "% : " << left_value /*% right_value*/ << endl;
 
-
- 
 }
