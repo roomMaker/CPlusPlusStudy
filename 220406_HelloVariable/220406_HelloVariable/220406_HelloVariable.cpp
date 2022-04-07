@@ -57,4 +57,6 @@ int main()
     cin >> age;
 
     cout << my_name << " : " << other_name << "님 " << age << "살 생일을 축하합니다.";
+
+
 }
