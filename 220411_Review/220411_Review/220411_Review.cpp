@@ -132,18 +132,37 @@ using namespace std;
 
 int main()
 {
+    //srand(time(NULL));
+    //int minNumber, maxNumber, randNumber, userNumber;
+    //randNumber = rand() % 8;
+    //randNumber <= 2 ? randNumber += 3 : randNumber;
+    //cout << randNumber << endl;//1번
+
+    //cout << "최대값을 입력 : ";
+    //cin >> maxNumber;
+    //cout << "최솟값을 입력 : ";
+    //cin >> minNumber;
+    //randNumber = (rand() % maxNumber) + 1;
+    //randNumber <= (minNumber - 1) ? randNumber += minNumber : randNumber;
+    //cout << randNumber << endl;//2번
+
+    //randNumber = (rand() % 9) + 1;
+    //cout << "1 ~ 9 사이의 숫자 입력 : ";
+    //cin >> userNumber;
+    //cout << boolalpha << (randNumber == userNumber) << endl;//3번
+
     srand(time(NULL));
     int minNumber, maxNumber, randNumber, userNumber;
-    randNumber = rand() % 8;
-    randNumber <= 2 ? randNumber += 3 : randNumber;
-    cout << randNumber << endl;//1번
+    randNumber = rand() % 5 + 3;
+    //randNumber <= 2 ? randNumber += 3 : randNumber;
+    cout << randNumber << endl; //1번
 
-    cout << "최대값을 입력 : ";
+    cout << "최댓값을 입력 : ";
     cin >> maxNumber;
     cout << "최솟값을 입력 : ";
     cin >> minNumber;
-    randNumber = (rand() % maxNumber) + 1;
-    randNumber <= (minNumber - 1) ? randNumber += minNumber : randNumber;
+    randNumber = rand() % ((maxNumber - minNumber) + 1) + minNumber;
+    //randNumber <= (minNumber - 1) ? randNumber += minNumber : randNumber;
     cout << randNumber << endl;//2번
 
     randNumber = (rand() % 9) + 1;
@@ -152,32 +171,3 @@ int main()
     cout << boolalpha << (randNumber == userNumber) << endl;//3번
 
 }
-
-
-
-
-
-
-
-//srand(time(NULL));
-    //std::cout << rand() << std::endl;
-    //(10 > 5) ? std::cout << "10이 5보다 크다" : std::cout << "10이 5보다 작다";
-    //std::cout << std::endl;
-    //std::cout << !1 << std::endl; // 0
-    //std::cout << ((10 < 5) == 0) << std::endl; // 1
-    //
-
-    //int input_key = 10;
-
-    //std::cout << input_key++ << input_key << input_key++ << input_key << input_key++ << std::endl;  // 10
-    //std::cout << ++input_key << std::endl;  // 12
-    //std::cout << input_key-- << std::endl;  // 12
-    //std::cout << --input_key << std::endl;  // 10
-
-    //float testFloat = 5.3f;
-    //float testFloat2 = 5.3;
-    //char testCharacter = 'a';
-    //std::string testString = "hello";
-
-    //std::cout << "Hello World!\n";
-    //std::cin >> input_key;
