@@ -172,7 +172,7 @@ int main()
         cout << "Hello World" << endl;
         count++;
     }*/
-    
+
     /*while (1) {
         cout << "Hello World" << endl;
         count++;
@@ -185,7 +185,7 @@ int main()
     {
         cout << "Hello World" << endl;
         count++;
-    } 
+    }
     while (count < 5);*/
 
     /*srand(time(NULL));
@@ -206,16 +206,16 @@ int main()
     while (randNumber != userNumber) {
         cout << "1 ~ 9 사이의 숫자 맞추기!! : ";
         cin >> userNumber;
-       
+
         (randNumber == userNumber) ? cout << "정답!" << endl : cout << "다시 시도해 보세요" << endl;
     }*/ //실습
 
     /*for (int i = 0; i < 5; i++) {
         cout << "Hello World" << endl;
     }*/
-    
 
-    
+
+
     /*
     cout << "10부터 1까지 출력 : ";
     for (i = 10; i > 0; i--) {
@@ -234,9 +234,9 @@ int main()
     cout << endl;*/
 
     /*int i;
-    
+
     for (i = 1; i < 10; i++) {
-        cout << "2 * " << i << " = " << 2 * i << endl; 
+        cout << "2 * " << i << " = " << 2 * i << endl;
     }
     cout << endl;
 
@@ -261,67 +261,87 @@ int main()
         cout << endl;
     }*/
 
-        for (int i = 1; i < 6; i++) {
-            for (int j = 1; j <= i; j++) {
-                cout << "*";
-            }
-            cout << endl;
-        } // 1번
+    for (int i = 1; i < 6; i++) {
+        for (int j = 1; j <= i; j++) {
+            cout << "*";
+        }
         cout << endl;
-        
-        for (int i = 1; i < 6; i++) {
-            for (int j = 4; j >= i; j--) {
-                cout << " ";
-            }
-            for (int j = 1; j <= i; j++) {
-                cout << "*";
-            }
-            cout << endl;
-        } // 2번
+    } // 1번
+    cout << endl;
+
+    for (int i = 1; i < 6; i++) {
+        for (int j = 4; j >= i; j--) {
+            cout << " ";
+        }
+        for (int j = 1; j <= i; j++) {
+            cout << "*";
+        }
         cout << endl;
-        
-        for (int i = 5; i > 0; i--) {
-            for (int j = 1; j <= i; j++) {
-                cout << "*";
-            }
-            cout << endl;
-        } // 3번
+    } // 2번
+    cout << endl;
+
+    for (int i = 5; i > 0; i--) {
+        for (int j = 1; j <= i; j++) {
+            cout << "*";
+        }
         cout << endl;
-        
-        for (int i = 1; i < 6; i++) {
-            for (int j = 2; j <= i; j++) {
-                cout << " ";
-            }
-            for (int j = 5; j >= i; j--) {
-                cout << "*";
-            }
-            cout << endl;
-        } // 4번
+    } // 3번
+    cout << endl;
+
+    for (int i = 1; i < 6; i++) {
+        for (int j = 2; j <= i; j++) {
+            cout << " ";
+        }
+        for (int j = 5; j >= i; j--) {
+            cout << "*";
+        }
         cout << endl;
-        
-        for (int i = 0; i < 5; i++) {
-            for (int j = 3; j >= i; j--) {
-                cout << " ";
-            }
-            for (int j = 0; j <= i + i; j++) {
-                cout << "*";
-            }
-            cout << endl;
-        } // 5번
+    } // 4번
+    cout << endl;
+
+    for (int i = 0; i < 5; i++) {
+        for (int j = 3; j >= i; j--) {
+            cout << " ";
+        }
+        for (int j = 0; j <= i + i; j++) {
+            cout << "*";
+        }
         cout << endl;
-        
-        for (int i = 0; i < 5; i++) {
-            for (int j = 1; j <= i; j++) {
-                cout << " ";
-            }
-            for (int j = 8; j >= i + i; j--) {
-                cout << "*";
-            }
-            cout << endl;
-        } // 6번
+    } // 5번
+    cout << endl;
+
+    for (int i = 0; i < 5; i++) {
+        for (int j = 1; j <= i; j++) {
+            cout << " ";
+        }
+        for (int j = 8; j >= i + i; j--) {
+            cout << "*";
+        }
         cout << endl;
-        
-        for (int i = 0; i < 5; i++) {
+    } // 6번
+    cout << endl;
+
+    for (int i = 0; i < 5; i++) {
+        for (int j = 3; j >= i; j--) {
+            cout << " ";
+        }
+        for (int j = 0; j <= i + i; j++) {
+            cout << "*";
+        }
+        cout << endl;
+    }
+    for (int i = 1; i < 5; i++) {
+        for (int j = 1; j <= i; j++) {
+            cout << " ";
+        }
+        for (int j = 8; j >= i + i; j--) {
+            cout << "*";
+        }
+        cout << endl;
+    }// 7번
+    cout << endl;
+    for (int i = 0;i < 9;i++) {
+        if (i < 5) {
             for (int j = 3; j >= i; j--) {
                 cout << " ";
             }
@@ -330,13 +350,91 @@ int main()
             }
             cout << endl;
         }
-        for (int i = 1; i < 5; i++) {
-            for (int j = 1; j <= i; j++) {
+        else {
+            for (int j = 5; j <= i; j++) {
                 cout << " ";
             }
-            for (int j = 8; j >= i + i; j--) {
+            for (int j = 7; j > i + i - 10; j--) {
                 cout << "*";
             }
             cout << endl;
-        }// 7번
+        }
+    }// 7번 if문
+    cout << endl;
+
+    int num;
+    cin >> num;
+    for (int i = 0;i < 2 * num - 1;i++) {
+        if (i < num) {
+            for (int j = 0; j <= i; j++) {
+                cout << "*";
+            }
+            for (int j = 2 * num - 2; j > i + i; j--) {
+                cout << " ";
+            }
+            for (int j = 0; j <= i; j++) {
+                cout << "*";
+            }
+            cout << endl;
+        }
+        else {
+            for (int j = 2 * num - 1; j > i; j--) {
+                cout << "*";
+            }
+            for (int j = 2 * num - 2; j < i + i; j++) {
+                cout << " ";
+            }
+            for (int j = 2 * num - 1; j > i; j--) {
+                cout << "*";
+            }
+            cout << endl;
+        }
+    }// 8번
+
+    cin >> num;
+    for (int i = 0;i < 2 * num - 1;i++) {
+        if (i < num) {
+            for (int j = 1;j <= i;j++) {
+                cout << " ";
+            }
+            for (int j = 2 * num - 1; j > i + i;j--) {
+                cout << "*";
+            }
+            cout << endl;
+        }
+        else {
+            for (int j = 2 * num - 2;j > i; j--) {
+                cout << " ";
+            }
+            for (int j = 2 * num - 3; j < i + i; j++) {
+                cout << "*";
+            }
+            cout << endl;
+        }
+
+    }// 9번
+
+    cin >> num;
+    for (int i = 0; i < num; i++) {
+        if (i == 0) {
+            for (int j = 0;j < num;j++) {
+                cout << "*";
+            }
+            cout << endl;
+        }
+        else if (i < num -1) {
+            cout << "*";
+            for (int j = 0;j < num - 2;j++) {
+                cout << " ";
+            }
+            cout << "*";
+            cout << endl;
+        }
+        else {
+            for (int j = 0;j < num;j++) {
+                cout << "*";
+            }
+        }
+        
+    }
 }
