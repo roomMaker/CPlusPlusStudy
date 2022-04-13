@@ -24,7 +24,8 @@
     3차원 배열 : int studentName[4][3][5];  // 60개의 int
         -> 4개 학년에 각각 3개 반이 존재, 각 반에 5명의 학생이 있다.
 
-
+    (엔터 없이) 문자 하나를 입력받는 방법
+    _getch();
 */
 
 /*
@@ -39,11 +40,16 @@
 
 #include <iostream>
 #include <string>
+#include <conio.h>
 
 using namespace std;
 
 int main()
 {
+
+    int inputKey = _getch();
+    cout << inputKey << endl;
+
     //int studentNums[3][5] = {{1,2,3,4,5},{6,7,8,9,10},{11,12,13,14,15}}; // 순서대로 출력하는 코드
 
     //for (int i = 0;i < 3;i++) {
@@ -72,7 +78,7 @@ int main()
     cout << studentNumber << "번째 학생의 이름은 " << studentName[studentNumber - 1] << "입니다.";*/
 
 
-    int guguResult[8][9];
+    /*int guguResult[8][9];
     int firstNum, secondNum;
     for (int i = 0;i < 8;i++) {
         for (int j = 0;j < 9;j++) {
@@ -85,6 +91,25 @@ int main()
     cout << "몇을 곱할까요? : ";
     cin >> secondNum;
 
-    cout << firstNum << " * " << secondNum << " = " << guguResult[firstNum-2][secondNum-1];
+    cout << firstNum << " * " << secondNum << " = " << guguResult[firstNum-2][secondNum-1];*/
+
+
+
+    /*int array[5][5] = {};
+    
+    for (int i = 0;i < 5;i++) {
+        if (i == 0) {
+
+        }else if() {
+        
+        }
+   
+    for (int i = 0;i < 5;i++) {
+        for (int j = 0;j < 5;j++) {
+            cout << array[i][j] << " ";
+        }
+        cout << endl;
+    }*/
+    
 
 }
