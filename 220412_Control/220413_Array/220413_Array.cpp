@@ -26,6 +26,10 @@
 
     (엔터 없이) 문자 하나를 입력받는 방법
     _getch();
+
+    (데이터)형변환 : 데이터타입을 변환한다.
+    묵시적 형변환
+    명시적 형변환
 */
 
 /*
@@ -35,6 +39,15 @@
     실습2.   구구단의 결과를 저장하는 2차원 배열을 하나 선언하고 
             이중 for문을 이용해서 배열 변수에 구구단의 결과값을 저장하고, 
             두 수를 입력 받아서 적합한 결과값을 출력해보자
+
+    실습3. A ~ Z 키 중에 하나를 정답으로 설정한다.
+          유저는 한 개의 키를 입력해서 설정된 값을 맞춘다.
+          유저가 입력한 키와 설정된 값이 맞으면 승리, 프로그램 종료
+          틀리면 남은 기회를 보여주고, 5번 틀리면 정답을 알려주고 게임오버
+
+          + 틀릴 때마다 정답 알파벳이 입력된 알파벳 앞에 있는지, 뒤에 있는지 힌트를 준다.
+
+          + 입력된 값이 대소문자 구분없이 처리 될 수 있도록 수정해보자.
 */
 
 
@@ -46,9 +59,62 @@ using namespace std;
 
 int main()
 {
+    int randNumber, getKey, turnCount = 4;
+    srand(time(NULL));
+    randNumber = (rand() % 26) + 97;//97 ~ 122
 
-    int inputKey = _getch();
-    cout << inputKey << endl;
+    cout << (char)randNumber;
+
+    while (1) {
+        cout << endl << "한 개의 키를 입력하세요 : ";
+        getKey = _getch();
+        cout << (char)getKey << endl;
+        if (getKey >= 65 && getKey <= 90) {
+            getKey += 32;
+        }//65~90
+
+
+        if (getKey == randNumber) {
+            cout << endl << "정답입니다!!" << endl;
+            break;
+        }
+        else if (getKey >= 97 && getKey <= 122) {
+            if (turnCount == 0) {
+                cout << endl << "게임오버" << endl;
+                break;
+            }
+
+            cout << endl << "땡! 오답입니다. 남은기회 " << turnCount-- << "번" << endl;
+
+            if (getKey < randNumber) {
+                cout << endl << "해당 알파벳보다 뒤에 있는 알파벳입니다." << endl;
+            }
+            else {
+                cout << endl << "해당 알파벳보다 앞에 있는 알파벳입니다." << endl;
+            }
+
+
+        }
+        else {
+            cout << "알파벳 키를 눌러주세요~" << endl;
+        }
+
+
+    } // 알파벳 맞추기
+
+
+
+
+
+
+
+
+
+
+    //int inputKey = _getch();
+    //char inputKeyChar = _getch();
+    //cout << (int)inputKeyChar << endl;
+
 
     //int studentNums[3][5] = {{1,2,3,4,5},{6,7,8,9,10},{11,12,13,14,15}}; // 순서대로 출력하는 코드
 
@@ -96,20 +162,44 @@ int main()
 
 
     /*int array[5][5] = {};
-    
-    for (int i = 0;i < 5;i++) {
-        if (i == 0) {
-
-        }else if() {
+    int num=1,count=0;
+    while (1) {
+        for (int i = count;i < (5-count);i++) {
+            array[count][i] = num;
+            num++;
+        }
+        if (num == 26) {
+            break;
+        }
+        for (int i = count + 1 ;i < (5 - count);i++) {
+            array[i][4 - count] = num;
+            num++;
+        }
+        for (int i = 3 - count;i >= count;i--) {
+            array[4 - count][i] = num;
+            num++;
+        }
+        for (int i = 3 - count;i > count;i--) {
+            array[i][count] = num;
+            num++;
+        }
+        count++;
         
-        }
-   
-    for (int i = 0;i < 5;i++) {
-        for (int j = 0;j < 5;j++) {
-            cout << array[i][j] << " ";
-        }
-        cout << endl;
-    }*/
+    }
     
+            
+        for (int i = 0;i < 5;i++) {
+                for (int j = 0;j < 5;j++) {
+                    cout << array[i][j] << "\t";
+                }
+                cout << endl;
+        }*///달팽이
 
+
+
+
+
+
+        
+    
 }
