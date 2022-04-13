@@ -84,10 +84,10 @@ int main()
 
     int playerX, playerY, escapeX, escapeY, inputKey;
     srand(time(NULL));
-    escapeX = rand() % 9 + 1;
-    escapeY = rand() % 9 + 1;
-    playerX = 0;
-    playerY = 0;
+    escapeX = rand() % 9 + 1; //탈출지점 세로위치
+    escapeY = rand() % 9 + 1; //탈출지점 가로위치
+    playerX = 0; // 플레이어 세로위치
+    playerY = 0; // 플레이어 가로위치
     int array[10][10];
     while (1) {
         for (int i = 0;i < 10;i++) {
