@@ -48,6 +48,28 @@
           + 틀릴 때마다 정답 알파벳이 입력된 알파벳 앞에 있는지, 뒤에 있는지 힌트를 준다.
 
           + 입력된 값이 대소문자 구분없이 처리 될 수 있도록 수정해보자.
+    
+    실습4. 콘솔용 탈출게임
+          10 * 10 크기의 맵을 구성한다. (2차원 배열)
+
+          O#########
+          ##########
+          ##########
+          ##########
+          ##########
+          ##########
+          ##########
+          ##########
+          ######E###
+          ##########
+          
+          플레이어(0, 0)가 존재한다. -> O 
+          탈출지점이 존재한다. -> E
+          WASD 키입력을 통해 플레이어를 이동시킨다.
+          탈출지점은 (0, 0) 을 제외하고 랜덤 설정
+          O가 E에 도달하면 "탈출에 성공했습니다." 프로그램 종료
+
+          
 */
 
 
@@ -59,48 +81,118 @@ using namespace std;
 
 int main()
 {
-    int randNumber, getKey, turnCount = 4;
+
+    int playerX, playerY, escapeX, escapeY, inputKey;
     srand(time(NULL));
-    randNumber = (rand() % 26) + 97;//97 ~ 122
-
-    cout << (char)randNumber;
-
+    escapeX = rand() % 9 + 1;
+    escapeY = rand() % 9 + 1;
+    playerX = 0;
+    playerY = 0;
+    int array[10][10];
     while (1) {
-        cout << endl << "한 개의 키를 입력하세요 : ";
-        getKey = _getch();
-        cout << (char)getKey << endl;
-        if (getKey >= 65 && getKey <= 90) {
-            getKey += 32;
-        }//65~90
+        for (int i = 0;i < 10;i++) {
+            for (int j = 0;j < 10;j++) {
+                array[i][j] = '#';
+            }
+        }
+        array[escapeX][escapeY] = 'E';
+        array[playerX][playerY] = 'O';
 
-
-        if (getKey == randNumber) {
-            cout << endl << "정답입니다!!" << endl;
+        for (int i = 0;i < 10;i++) {
+            for (int j = 0;j < 10;j++) {
+                cout << (char)array[i][j];
+            }
+            cout << endl;
+        }
+        if (playerX == escapeX && playerY == escapeY) {
+            cout << "탈출에 성공했습니다!!!" << endl;
             break;
         }
-        else if (getKey >= 97 && getKey <= 122) {
-            if (turnCount == 0) {
-                cout << endl << "게임오버" << endl;
-                break;
-            }
-
-            cout << endl << "땡! 오답입니다. 남은기회 " << turnCount-- << "번" << endl;
-
-            if (getKey < randNumber) {
-                cout << endl << "해당 알파벳보다 뒤에 있는 알파벳입니다." << endl;
-            }
-            else {
-                cout << endl << "해당 알파벳보다 앞에 있는 알파벳입니다." << endl;
-            }
-
-
+        inputKey = _getch();
+        switch (inputKey) {
+            case 97:
+                if (playerY <= 0) {
+                    break;
+                }
+                playerY--;
+                break; // 왼쪽으로 가유~
+            case 115:
+                if (playerX >= 9) {
+                    break;
+                }
+                playerX++;
+                break; // 아래로 가유~
+            case 100:
+                if (playerY >= 9) {
+                    break;
+                }
+                playerY++;
+                break; // 오른쪽으로 가유~
+            case 119:
+                if (playerX <= 0) {
+                    break;
+                }
+                playerX--;
+                break; // 위로 가유~
         }
-        else {
-            cout << "알파벳 키를 눌러주세요~" << endl;
-        }
+        
+        system("cls");
+    }
+        
+        //system("cls");
+    
+    
+
+    
+
+    //system("cls"); 화면 지우개
 
 
-    } // 알파벳 맞추기
+
+
+
+    //int randNumber, getKey, turnCount = 4;
+    //srand(time(NULL));
+    //randNumber = (rand() % 26) + 97;//97 ~ 122
+
+    //cout << (char)randNumber;
+
+    //while (1) {
+    //    cout << endl << "한 개의 키를 입력하세요 : ";
+    //    getKey = _getch();
+    //    cout << (char)getKey << endl;
+    //    if (getKey >= 65 && getKey <= 90) {
+    //        getKey += 32;
+    //    }//65~90
+
+
+    //    if (getKey == randNumber) {
+    //        cout << endl << "정답입니다!!" << endl;
+    //        break;
+    //    }
+    //    else if (getKey >= 97 && getKey <= 122) {
+    //        if (turnCount == 0) {
+    //            cout << endl << "게임오버" << endl;
+    //            break;
+    //        }
+
+    //        cout << endl << "땡! 오답입니다. 남은기회 " << turnCount-- << "번" << endl;
+
+    //        if (getKey < randNumber) {
+    //            cout << endl << "해당 알파벳보다 뒤에 있는 알파벳입니다." << endl;
+    //        }
+    //        else {
+    //            cout << endl << "해당 알파벳보다 앞에 있는 알파벳입니다." << endl;
+    //        }
+
+
+    //    }
+    //    else {
+    //        cout << "알파벳 키를 눌러주세요~" << endl;
+    //    }
+
+
+    //} // 알파벳 맞추기
 
 
 
