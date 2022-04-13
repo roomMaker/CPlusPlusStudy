@@ -13,11 +13,27 @@
     변수의 메모리주소 값은 "&변수명" 이나 배열의 메모리주소는 "배열명" 이다
 
     배열의 [n] 안의 숫자는 할당된 메모리의 처음 주소와의 n번째 떨어져있는지 로 생각하면 됨.
+
+    2차원배열 및 다차원배열
+    배열이 "개념적으로" 2중으로, 다중으로 구성되어 있는 것
+
+    1차원 배열 : int studentNumber[5];      // 5개의 int
+        -> 5명의 학생이 있다.
+    2차원 배열 : int studentName[3][10];    // 15개의 int
+        -> 3개 반에 각각 5명의 학생이 있다.
+    3차원 배열 : int studentName[4][3][5];  // 60개의 int
+        -> 4개 학년에 각각 3개 반이 존재, 각 반에 5명의 학생이 있다.
+
+
 */
 
 /*
-    실습1. string형 배열변수 5개짜리를 선언하고 반복문을 통해 학생의 이름을 입력받는다.
-          입력을 다 받고나서 1 ~ 5 사이의 값을 입력하면 해당학생의 이름이 출력된다.
+    실습1.   string형 배열변수 5개짜리를 선언하고 반복문을 통해 학생의 이름을 입력받는다.
+            입력을 다 받고나서 1 ~ 5 사이의 값을 입력하면 해당학생의 이름이 출력된다.
+
+    실습2.   구구단의 결과를 저장하는 2차원 배열을 하나 선언하고 
+            이중 for문을 이용해서 배열 변수에 구구단의 결과값을 저장하고, 
+            두 수를 입력 받아서 적합한 결과값을 출력해보자
 */
 
 
@@ -28,6 +44,15 @@ using namespace std;
 
 int main()
 {
+    //int studentNums[3][5] = {{1,2,3,4,5},{6,7,8,9,10},{11,12,13,14,15}}; // 순서대로 출력하는 코드
+
+    //for (int i = 0;i < 3;i++) {
+    //    for (int j = 0;j < 5;j++) {
+    //        cout << studentNums[i][j] << endl;
+    //    }
+    //}
+
+
     /*int nums[10] = {1,2,3,4,5,6,7,8,9,12};
 
     cout << nums << endl;
@@ -36,7 +61,7 @@ int main()
     }*/
     //cout << nums[10] << endl; // 런타임에러 - 잘못된 메모리주소에 접근한 경우
 
-    string studentName[5];
+    /*string studentName[5];
     int studentNumber;
     for (int i = 0;i < 5;i++) {
         cout << i + 1 << "번째 학생의 이름을 입력하세요 : ";
@@ -44,6 +69,22 @@ int main()
     }
     cout << "1 ~ 5사이의 번호를 입력하세요 : ";
     cin >> studentNumber;
-    cout << studentNumber << "번째 학생의 이름은 " << studentName[studentNumber - 1] << "입니다.";
+    cout << studentNumber << "번째 학생의 이름은 " << studentName[studentNumber - 1] << "입니다.";*/
+
+
+    int guguResult[8][9];
+    int firstNum, secondNum;
+    for (int i = 0;i < 8;i++) {
+        for (int j = 0;j < 9;j++) {
+            guguResult[i][j] = (i+2) * (j+1);
+        }
+    }
+    cout << "(결과 저장 완료)" << endl;
+    cout << "몇 단을 볼까요? : ";
+    cin >> firstNum;
+    cout << "몇을 곱할까요? : ";
+    cin >> secondNum;
+
+    cout << firstNum << " * " << secondNum << " = " << guguResult[firstNum-2][secondNum-1];
 
 }
