@@ -99,7 +99,7 @@ int main()
 
 
         cout << endl << "체력 : " << player.stamina << endl << "F : 숲 (체력 -1) S : 늪 (체력 -3)";
-        if (player.stamina == 0) {
+        if (player.stamina <= 0) {
             cout << endl << "게임 오버" << endl;
             break;
         }
