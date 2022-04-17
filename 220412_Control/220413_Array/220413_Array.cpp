@@ -155,7 +155,7 @@ int main()
     //srand(time(NULL));
     //randNumber = (rand() % 26) + 97;//97 ~ 122
 
-    //cout << (char)randNumber;
+    ////cout << (char)randNumber;
 
     //while (1) {
     //    cout << endl << "한 개의 키를 입력하세요 : ";

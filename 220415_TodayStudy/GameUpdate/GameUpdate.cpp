@@ -28,7 +28,7 @@ struct swamp {
 int main()
 {
 
-    //int playerX, playerY, escapeX, escapeY, inputKey;
+    
     srand(time(NULL));
     escape.escapeX = rand() % 9 + 1;
     escape.escapeY = rand() % 9 + 1;
@@ -53,20 +53,12 @@ int main()
             }
         }
 
-        /*for (int i = 0;i < 5;i++) {
-            
-            map.map[forest.forestX[i]][forest.forestY[i]] = 'F';
-        }
-
-        for (int i = 0;i < 5;i++) {
-            
-            map.map[forest.forestX[i]][forest.forestY[i]] = 'S';
-        }*/
+    
         
         for (int i = 0;i < 10;i++) {
             for (int j = 0;j < 10;j++) {
-                map.map[forest.forestX[i]][forest.forestY[i]] = 'F';        //forest.forestArray[forest.forestX[i]][forest.forestY[j]] = 'F';
-                map.map[swamp.swampX[i]][swamp.swampY[i]] = 'S';        //swamp.swampArray[swamp.swampX[i]][swamp.swampY[j]] = 'S';
+                map.map[forest.forestX[i]][forest.forestY[i]] = 'F';    
+                map.map[swamp.swampX[i]][swamp.swampY[i]] = 'S';        
             }   
         }
 

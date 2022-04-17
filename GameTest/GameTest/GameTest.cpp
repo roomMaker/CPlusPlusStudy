@@ -1,763 +1,569 @@
-﻿// 220414_Study.cpp : 이 파일에는 'main' 함수가 포함됩니다. 거기서 프로그램 실행이 시작되고 종료됩니다.
-//
-
+﻿
 #include <iostream>
 #include <conio.h>
-#include <Windows.h>
-
 using namespace std;
+
 int main()
 {
-    /*
-    콘솔용 탈출게임 10 * 10 크기의 맵을 구성한다.
-    (2차원 배열) 플레이어가 존재한다.(0, 0)
-    탈출구가 존재한다.(0, 0)을 제외한 랜덤 설정
-    WASD 키입력을 통해 플레이어를 이동시킨다.
-    플레이어가 탈출구에 도달하면 "탈출 성공" 출력 후 종료
-    SYSTEM("cls"); 를 이용해 콘솔 초기화를 사용한다.
-    */
-
-    string map[20][20];
-    int ex, ey;
-    int px, py;
-    int wx, wy;
-    int mx, my;
-    int mx1, my1;
-    int mx2, my2;
-    int mx3, my3;
-    int mmx[4];
-    int key[4] = { 0,0,0,0 };
-    int chance;
-    px = 0; py = 0;
-    srand((unsigned int)time(NULL));
-
-
-    for (int i = 0; i < 20; i++)// 지형 배치
-    {
-        for (int j = 0; j < 20; j++)
-        {
-            map[i][j] = "□";
-        }
-    }
-    /*
-    for (int i = 0; i < 1000; i++)//벽 배치
-    {
-        do
-        {
-            wx = rand() % 20;
-            wy = rand() % 20;
-        } while (wx == 0 && wy == 0);
-        map[wx][wy] = "■";
-    }
-    */
-    do//몬스터 배치1
-    {
-        mx = rand() % 20;
-        my = rand() % 20;
-    } while (mx == 0 && my == 0);
-    do//몬스터 배치2
-    {
-        mx1 = rand() % 20;
-        my1 = rand() % 20;
-    } while (mx1 == 0 && my1 == 0);
-    do//몬스터 배치3
-    {
-        mx2 = rand() % 20;
-        my2 = rand() % 20;
-    } while (mx2 == 0 && my2 == 0);
-    do//몬스터 배치4
-    {
-        mx3 = rand() % 20;
-        my3 = rand() % 20;
-    } while (mx3 == 0 && my3 == 0);
-    do// 플레이어, 출구 배치
-    {
-        ex = rand() % 20;
-        ey = rand() % 20;
-    } while (ex == 0 && ey == 0);
-
-    while (true)
-    {
-        map[px][py] = "♣";//플레이어 위치를 #에서 ♣로 바꿈
-        if (key[0] == 1 || key[0] == 0)
-        {
-            map[mx][my] = "11";//적 위치를 #에서 ★로 바꿈
-        }
-        if (key[1] == 1 || key[1] == 0)
-        {
-            map[mx1][my1] = "22";//적 위치를 #에서 ★로 바꿈
-        }
-        if (key[2] == 1 || key[2] == 0)
-        {
-            map[mx2][my2] = "33";//적 위치를 #에서 ★로 바꿈
-        }
-        if (key[3] == 1 || key[3] == 0)
-        {
-            map[mx3][my3] = "44";//적 위치를 #에서 ★로 바꿈
-        }
-        map[ex][ey] = "●";
-        system("cls");
-
-        for (int i = 0; i < 20; i++)// 이동마다 초기화 후 맵 다시 깔기
-        {
-            for (int j = 0; j < 20; j++)
-            {
-                cout << map[i][j];
-            }
-            cout << endl;
-        }
-
-        if (px == ex && py == ey && key[0] == 2 && key[1] == 2 && key[2] == 2 && key[3] == 2)// 플레이어와 탈출구의 값이 같으면...
-        {
-            cout << "탈출 성공!";
-            break;
-        }
-
-        if ((px == mx && py == my) || (px - 1 == mx && py == my) || (px + 1 == mx && py == my) || (px == mx && py - 1 == my) || (px == mx && py + 1 == my))// 플레이어와 몬스터 값이 같으면...
-        {
-            cout << "몬스터를 마주쳤다!";
-            key[0] = 1;
-            for (chance = 1; chance <= 3; chance++) // chance : 미니게임 도전 횟수
-            {
-                int m_rps = 1 + (rand() % 3); // m_rps : 몬스터가 내는 가위바위보 값 (1 = 바위, 2 = 보, 3 = 가위)
-
-                int u_rps; // u_rps : 유저가 내는 가위바위보 값 (1. 바위 / 2. 보 / 3. 가위)
-
-                cout << "결전의 시간이다! 무엇을 낼지 번호를 입력해보자!" << endl << endl;
-                cout << "1. 바위   2. 보   3. 가위" << endl << endl;
-
-                cin >> u_rps;
-
-                if (m_rps != u_rps) // 승, 패가 결정되는 경우 
-                {
-                    system("cls");
-
-                    for (int i = 0; i < 20; i++)// 이동마다 초기화 후 맵 다시 깔기
-                    {
-                        for (int j = 0; j < 20; j++)
-                        {
-                            cout << map[i][j];
-                        }
-                        cout << endl;
-                    }
-
-                    if (u_rps == 1) // 유저가 바위를 낸 경우
-                    {
-                        if (m_rps == 3) // 몬스터가 가위를 낸 경우
-                        {
-                            cout << "이겼다! 몬스터를 물리쳤다!" << endl;
-                            key[0] = 2;
-                            break;
-                        }
-                        else // 몬스터가 보를 낸 경우
-                        {
-                            cout << "졌다... 하지만 아직 기회는 " << (3 - chance) << "번 있어!" << endl;
-                        }
-                    }
-                    else if (u_rps == 2) // 유저가 보를 낸 경우
-                    {
-                        if (m_rps == 1) // 몬스터가 바위를 낸 경우
-                        {
-                            cout << "이겼다! 몬스터를 물리쳤다!" << endl;
-                            key[0] = 2;
-                            break;
-                        }
-                        else // 몬스터가 가위를 낸 경우
-                        {
-                            cout << "졌다... 하지만 아직 기회는 " << (3 - chance) << "번 있어!" << endl;
-                        }
-                    }
-                    else // 유저가 가위를 낸 경우
-                    {
-                        if (m_rps == 2) // 몬스터가 보를 낸 경우
-                        {
-                            cout << "이겼다! 몬스터를 물리쳤다!" << endl;
-                            key[0] = 2;
-                            break;
-                        }
-                        else // 몬스터가 바위를 낸 경우
-                        {
-                            cout << "졌다... 하지만 아직 기회는 " << (3 - chance) << "번 있어!" << endl;
-                        }
-                    }
-                }
-                else // 무승부일 경우
-                {
-                    system("cls");
-                    for (int i = 0; i < 20; i++)// 이동마다 초기화 후 맵 다시 깔기
-                    {
-                        for (int j = 0; j < 20; j++)
-                        {
-                            cout << map[i][j];
-                        }
-                        cout << endl;
-                    }
-                    cout << "무승부다! 다시 승부를 보자!" << endl;
-
-                    chance -= 1;
-                }
-            }
-            map[mx][my] = "□";
-            mx = 0; my = 0;
-            if (key[0] != 2)
-            {
-                cout << "game over";
-                break;
-            }
-        }
-        if ((px == mx1 && py == my1) || (px - 1 == mx1 && py == my1) || (px + 1 == mx1 && py == my1) || (px == mx1 && py - 1 == my1) || (px == mx1 && py + 1 == my1))// 플레이어와 몬스터1 값이 같으면...
-        {
-            key[1] = 1;
-            cout << "몬스터를 마주쳤다!";
-            map[mx1][my1] = "□";
-            mx1 = 0; my1 = 0;
-
-
-            int beskin_p = 0;
-            int beskin_m;
-            int beskin_num = 0;
-
-            while (1)
-            {
-                if (beskin_num < 31)
-                {
-                    if (beskin_num <= 15)
-                    {
-                        beskin_m = rand() % 3;
-                    }
-                    /*
-                    switch (beskin_num)
-                    {
-                    case 15: beskin_m = 2;
-                        break;
-                    case 16: beskin_m = 1;
-                        break;
-                    case 17: beskin_m = 0;
-                        break;
-                    case 19: beskin_m = 2;
-                        break;
-                    case 20: beskin_m = 1;
-                        break;
-                    case 21: beskin_m = 0;
-                        break;
-                    case 23: beskin_m = 2;
-                        break;
-                    case 24: beskin_m = 1;
-                        break;
-                    case 25: beskin_m = 0;
-                        break;
-                    case 27: beskin_m = 2;
-                        break;
-                    case 28: beskin_m = 1;
-                        break;
-                    case 29: beskin_m = 0;
-                        break;
-                    }
-                   */
-                    cout << "컴퓨터 : " << "\t";
-                    switch (beskin_m)
-                    {
-                    case 0: cout << (beskin_num += 1) << endl;
-                        break;
-                    case 1: cout << (beskin_num += 1) << ", ";
-                        cout << (beskin_num += 1) << endl;
-                        break;
-                    case 2: cout << (beskin_num += 1) << ", ";
-                        cout << (beskin_num += 1) << ", ";
-                        cout << (beskin_num += 1) << endl;
-                        break;
-                    }
-                }
-                else
-                {
-                    cout << "플레이어 패배\n" << "game over";
-                    break;
-                }
-                if (beskin_num < 31)
-                {
-                    while (1)
-                    {
-                        cout << "1 ~ 3 숫자 입력" << endl;
-                        cin >> beskin_p;
-                        system("cls");
-                        for (int i = 0; i < 20; i++)// 이동마다 초기화 후 맵 다시 깔기
-                        {
-                            for (int j = 0; j < 20; j++)
-                            {
-                                cout << map[i][j];
-                            }
-                            cout << endl;
-                        }
-                        cout << "플레이어 : " << "\t";
-                        switch (beskin_p)
-                        {
-                        case 1: cout << (beskin_num += 1) << endl;
-                            break;
-                        case 2: cout << (beskin_num += 1) << ", ";
-                            cout << (beskin_num += 1) << endl;
-                            break;
-                        case 3: cout << (beskin_num += 1) << ", ";
-                            cout << (beskin_num += 1) << ", ";
-                            cout << (beskin_num += 1) << endl;
-                            break;
-                        }
-                        if (beskin_p >= 1 && beskin_p <= 3)
-                        {
-                            break;
-                        }
-                    }
-                }
-                else
-                {
-                    cout << "컴퓨터 패배";
-                    key[1] = 2;
-                    break;
-                }
-
-            }
-
-        }
-        if (key[1] == 1)
-        {
-            break;
-        }
-        if ((px == mx2 && py == my2) || (px - 1 == mx2 && py == my2) || (px + 1 == mx2 && py == my2) || (px == mx2 && py - 1 == my2) || (px == mx2 && py + 1 == my2))// 플레이어와 몬스터2 값이 같으면...
-        {
-            cout << "몬스터를 마주쳤다!";
-            key[2] = 1;
-            map[mx2][my2] = "□";
-            mx2 = 0;
-            my2 = 0;
-            string u_answer;
-            int wrong_answer = 0;
-            string quiz[2][10] = {
-                                    {
-                                        "항상 말다툼이 일어나는 곳은?", "중학생 고등학생만 탈 수 있는 차는?",
-                                        "밤낮을 가리지 않고 일하는 것은?", "몸에 해로운 바지는?",
-                                        "먹을수록 덜덜 떨게되는 음식은?", "세상에서 가장 빠른 떡은?",
-                                        "크면 클수록 가벼워지는 것은?", "왕이 궁에 가기 싫으면 하는 말은?",
-                                        "인천앞바다의 반대말은?", "도둑이 훔친 돈을 뭐라고 할까?",
-                                    },
-                                    {
-                                        "경마장", "중고차",
-                                        "시계", "유해진",
-                                        "추어탕", "헐레벌떡",
-                                        "풍선", "궁시렁",
-                                        "인천엄마다", "슬그머니",
-                                    }
-            };
-
-            for (int problem = 0; problem < 10; problem++)
-            {
-                cout << quiz[0][problem] << endl;
-                cin >> u_answer;
-
-                if (u_answer == quiz[1][problem])
-                    cout << "흠... 정답을 맞췄군. 제법인데?" << endl;
-                else
-                {
-                    cout << "바보같은 녀석 ㅋㅋㅋ 정답은 " << quiz[1][problem] << "이다." << endl;
-                    wrong_answer++;
-                }
-
-                if (wrong_answer == 3)
-                {
-                    cout << "4번이나 틀리다니!!! 너는 탈출할 자격이 없구나!!! 죽어라!!!" << endl;
-                    break;
-                }
-            }
-            if (wrong_answer <= 4)
-            {
-                key[2] = 2;
-            }
-            else
-            {
-                break;
-            }
-        }
-        if (key[2] == 1)
-        {
-            break;
-        }
-        if ((px == mx3 && py == my3) || (px - 1 == mx3 && py == my3) || (px + 1 == mx3 && py == my3) || (px == mx3 && py - 1 == my3) || (px == mx3 && py + 1 == my3))// 플레이어와 몬스터2 값이 같으면...
-        {
-            cout << "몬스터를 마주쳤다!\n";
-            map[mx3][my3] = "□";
-            mx3 = 0; my3 = 0;
-            key[3] = 1;
-            srand((unsigned int)time(NULL));
-
-            int player_num;
-            int monster_num;
-
-            bool p_win = false;
-            bool m_win = false;
-
-            int empty = 0;
-
-            int p_row = 0;
-            int p_col = 0;
-            int m_row = 0;
-            int m_col = 0;
-
-            char bingo[3][3];
-
-            for (int i = 0; i < 3; i++) // 필드 넣기
-                for (int j = 0; j < 3; j++)
-                    bingo[i][j] = 'c';
-
-
-
-            for (int i = 0; i < 3; i++) // 필드에 찍기
-            {
-                for (int j = 0; j < 3; j++)
-                    cout << bingo[i][j];
-                cout << endl;
-            }
-
-
-            while (1)
-            {
-                cout << "a : 사용자의 말 | b : 몬스터의 말 | c : 빈칸 " << endl << endl;
-                cout << "왼쪽 위부터 0 1 2 이다. 숫자를 넣으시오" << endl;
-
-                cin >> player_num;
-
-                p_row = player_num / 3; // 가로
-                p_col = player_num % 3; // 세로
-
-               // cout << p_row << endl;
-              //  cout << p_col << endl;
-
-                Sleep(1000);
-
-
-                if ((bingo[p_row][p_col] == 'c')) // 플레이어 말이 놓을 수 있는가?
-                {
-                    bingo[p_row][p_col] = 'a'; // 플레이어 말
-
-                    system("cls");
-
-                    for (int i = 0; i < 3; i++) // 플레이어 차례 후 필드 찍기
-                    {
-                        for (int j = 0; j < 3; j++)
-                            cout << bingo[i][j];
-                        cout << endl;
-                    }
-
-                    cout << "몬스터 차례 " << endl;
-
-                    Sleep(1000);
-
-
-                    while (1) // 몬스터 말 두기
-                    {
-                        //srand(time(NULL));
-                        monster_num = rand() % 9;
-
-                        m_row = monster_num / 3; // 가로
-                        m_col = monster_num % 3; // 세로
-
-
-                        if (bingo[m_col][m_row] == 'c') // 몬스터가 말을 두려는 곳이 c로 비어있으면
-                        {
-                            bingo[m_col][m_row] = 'b'; // 말을 둔다
-                            break;
-                        }
-                        else // 안비어있다.
-                        {
-                            for (int i = 0; i < 3; i++) // 안 비어 있는데 놓을 수 있는 곳도 없어서 나와야 할때
-                                for (int j = 0; j < 3; j++)
-                                    if (bingo[i][j] == 'c')
-                                        empty++;
-
-                            if (empty == 9)
-                                break;
-
-                            empty = 0;
-                        }
-
-
-                    }
-
-                    Sleep(1000);
-
-                    system("cls");
-
-                    for (int i = 0; i < 3; i++) // 몬스터 말 놓고 필드 찍기
-                    {
-                        for (int j = 0; j < 3; j++)
-                            cout << bingo[i][j];
-                        cout << endl;
-                    }
-
-                    // 탐색 후 빙고 됬는 지 출력
-
-                    for (int i = 0; i < 3; i++) // 012 345 789
-                        if ((bingo[i][0] == bingo[i][1]) && (bingo[i][1] == bingo[i][2]))
-                            if (bingo[i][0] == 'a')
-                            {
-                                p_win = true;
-                            }
-                            else if (bingo[i][0] == 'b')
-                            {
-
-                                m_win = true;
-                            }
-                            else // 이경우는 '_'가 되었을 때 즉 _ _ _ 인 경우는 아무것도 안하기
-                                ;
-
-
-                    for (int i = 0; i < 3; i++) // 036 147 258
-                        if ((bingo[0][i] == bingo[1][i]) && (bingo[1][i] == bingo[2][i]))
-                            if (bingo[0][i] == 'a')
-                            {
-                                //cout << "빙고! 사용자가 이겼습니다." << endl;
-                                p_win = true;
-                            }
-                            else if (bingo[0][i] == 'b')
-                            {
-                                //cout << "빙고! 몬스터가 이겼습니다." << endl;
-                                m_win = true;
-                            }
-                            else // 이경우는 '_'가 되었을 때 즉 _ _ _ 인 경우는 아무것도 안하기
-                                ;
-
-                    if ((bingo[0][0] == bingo[1][1]) && (bingo[1][1] == bingo[2][2])) // 대각선(\) 로 승리 0 4 8
-                        if (bingo[0][0] == 'a')
-                            p_win = true;
-                        else if (bingo[0][0] == 'b')
-                            m_win = true;
-                        else
-                            ;
-
-                    if ((bingo[0][2] == bingo[1][1]) && (bingo[1][1] == bingo[2][0])) // 대각선(/) 로 승리 246
-                        if (bingo[0][2] == 'a')
-                            p_win = true;
-                        else if (bingo[0][2] == 'b')
-                            m_win = true;
-                        else
-                            ;
-
-                    for (int i = 0; i < 3; i++)
-                        for (int j = 0; j < 3; j++)
-                            if (bingo[i][j] == 'c')
-                                empty++;
-
-                    if (empty == 9) // 무승부 종료
-                    {
-                        cout << "둘 수 있는 자리가 없습니다. 무승부" << endl;
-                        break;
-                    }
-
-                    if (p_win)
-                    {
-                        cout << "빙고! 사용자가 이겼습니다." << endl;
-                        key[3] = 2;
-                        break;
-                    }
-                    if (m_win)
-                    {
-                        cout << "빙고! 몬스터가 이겼습니다." << endl;
-                        break;
-                    }
-
-                    empty = 0;
-                    p_row = 0;
-                    p_col = 0;
-                    m_row = 0;
-                    m_col = 0;
-                    // 전체 탐색 후 빈칸 (_) 이 없을 때 무승부로 끝나기.
-
-                }
-
-                else // 플레이어 말을 둘 수 없음 C가 아닌 a나 b가 자리하고 있음
-                {
-                    empty = 0;
-                    p_row = 0;
-                    p_col = 0;
-                    m_row = 0;
-                    m_col = 0;
-                    cout << "그곳엔 둘 수 없습니다.";
-                }
-
-            }
-
-        }
-        if (key[3] == 1)
-        {
-            cout << "game over";
-            break;
-        }
-        if (key[0] == 0)
-        {
-            mmx[0] = rand() % 4;
-
-            map[mx][my] = "□";
-            switch (mmx[0])//입력받은 키를 토대로 적의 위치값을 변환함
-            {
-            case 1:
-                if (my != 0)//IF조건을 걸고 맵을 넘어갈 수 없도록 제한
-                {
-                    my -= 1;
-                }
-                break;
-            case 2:
-                if (mx != 19)
-                {
-                    mx += 1;
-                }
-                break;
-            case 3:
-                if (my != 19)
-                {
-                    my += 1;
-                }
-                break;
-            case 0:
-                if (mx != 0)
-                {
-                    mx -= 1;
-                }
-                break;
-            }
-        }
-        if (key[1] == 0)
-        {
-            mmx[1] = rand() % 4;
-
-            map[mx1][my1] = "□";
-            switch (mmx[1])//입력받은 키를 토대로 적의 위치값을 변환함
-            {
-            case 1:
-                if (my1 != 0)//IF조건을 걸고 맵을 넘어갈 수 없도록 제한
-                {
-                    my1 -= 1;
-                }
-                break;
-            case 2:
-                if (mx1 != 19)
-                {
-                    mx1 += 1;
-                }
-                break;
-            case 3:
-                if (my1 != 19)
-                {
-                    my1 += 1;
-                }
-                break;
-            case 0:
-                if (mx1 != 0)
-                {
-                    mx1 -= 1;
-                }
-                break;
-            }
-        }
-        if (key[2] == 0)
-        {
-            mmx[2] = rand() % 4;
-
-            map[mx2][my2] = "□";
-            switch (mmx[2])//입력받은 키를 토대로 적의 위치값을 변환함
-            {
-            case 1:
-                if (my2 != 0)//IF조건을 걸고 맵을 넘어갈 수 없도록 제한
-                {
-                    my2 -= 1;
-                }
-                break;
-            case 2:
-                if (mx2 != 19)
-                {
-                    mx2 += 1;
-                }
-                break;
-            case 3:
-                if (my2 != 19)
-                {
-                    my2 += 1;
-                }
-                break;
-            case 0:
-                if (mx2 != 0)
-                {
-                    mx2 -= 1;
-                }
-                break;
-            }
-        }
-        if (key[3] == 0)
-        {
-            mmx[3] = rand() % 4;
-
-            map[mx3][my3] = "□";
-            switch (mmx[3])//입력받은 키를 토대로 적의 위치값을 변환함
-            {
-            case 1:
-                if (my3 != 0)//IF조건을 걸고 맵을 넘어갈 수 없도록 제한
-                {
-                    my3 -= 1;
-                }
-                break;
-            case 2:
-                if (mx3 != 19)
-                {
-                    mx3 += 1;
-                }
-                break;
-            case 3:
-                if (my3 != 19)
-                {
-                    my3 += 1;
-                }
-                break;
-            case 0:
-                if (mx3 != 0)
-                {
-                    mx3 -= 1;
-                }
-                break;
-            }
-        }
-        int key = _getch();//키를 입력받음 플레이어의 위치값을 #으로 미리 바꿔둠
-
-        map[px][py] = "□";
-
-        if (key < 96)//입력받은 키가 대문자 일때 소문자로 통일시킴
-        {
-            key += 32;
-        }
-        switch (key)//입력받은 키를 토대로 플레이어의 위치값을 변환함
-        {
-        case 97: //a
-            if (py != 0)//IF조건을 걸고 맵을 넘어갈 수 없도록 제한
-            {
-                py -= 1;
-            }
-            break;
-        case 115: //s
-            if (px != 19)
-            {
-                px += 1;
-            }
-            break;
-        case 100: //d
-            if (py != 19)
-            {
-                py += 1;
-            }
-            break;
-        case 119: //w
-            if (px != 0)
-            {
-                px -= 1;
-            }
-            break;
-        default://방향키 이외에 입력은 넘김
-            break;
-        }
-
-    }
+
+	char gameMap[45][45] = { '/' }; //맵 // 맵 최대 사이즈 +2 (경계선) +3 (level3에서의 배열 오버스택? 방지용)
+	int gameMapSize; //맵 크기
+	int gameSight = 3; //시야 크기
+
+	int gameEscapePosition[2];	//출구 위치
+	int gamePlayerPosition[2] = { 1, 1 }; //플레이어 위치
+	char gameKey; //입력키
+	int inputGameLevel; //난이도 입력
+
+	int gamesTalactiteCount; //종유석 개수
+	int gamesTalactitePosition[7][2]; //종유석 위치 배열
+
+	int gameJewelryCount; //보석 개수
+	int gameJewelryPosition[7][2]; // 보석 위치 배열
+	int gameJewelryScore[7]; // 보석 위치 배열
+
+	int gameItemPosition[4][2];	//아이템 위치 배열 // 갯수 변경 - Level3에서의 갯수 부족
+	int gameItemCount = 4; //아이템 개수
+
+	char well = '#';
+	int gamePlayerChance;
+	int wellLocation[2];
+
+	int gameJewelryBasicSocre[3] = { 100,200,300 };//보석 기본 점수(여기서 랜덤으로 배정)
+	bool gameClear = 1;
+	int score = 0;
+	int walk = 0;
+
+	int setPosition[20][2] = { { 0, 0 } }; // 중복하지 않는 랜덤 좌표를 기록하기 위한 이중배열
+
+	// 게임 난이도 설정 // map // sight
+	cout << "=================" << endl;
+	cout << ">> MINE ESCAPE <<" << endl;
+	cout << "=================" << endl;
+	do {
+		cout << "난이도 입력(1~3): ";
+		cin >> inputGameLevel;
+
+		switch (inputGameLevel)
+		{
+		case 1:
+			gameMapSize = 20;
+			gamesTalactiteCount = 4;
+			gameJewelryCount = 5;
+			//gameSight = 5; // sight
+			gameItemCount = 1;
+			break;
+		case 2:
+			gameMapSize = 30;
+			gamesTalactiteCount = 5;
+			gameJewelryCount = 6;
+			//gameSight = 4; // sight
+			gameItemCount = 2;
+			break;
+		case 3:
+			gameMapSize = 40;
+			gamesTalactiteCount = 7;
+			gameJewelryCount = 7;
+			//gameSight = 3; // sight
+			gameItemCount = 4;
+			break;
+		default:
+			cout << "잘못된 입력" << endl;
+			break;
+		}
+	} while (inputGameLevel > 3 || inputGameLevel < 1);
+
+	cout << "로딩중..." << endl;
+	srand(time(NULL));
+	// 랜덤 좌표 20개 저장
+	for (int j = 0; j < 20; j++)
+	{
+		for (int i = 0; i < 20; i++)
+		{
+			do {
+				setPosition[j][0] = rand() % gameMapSize + 1;
+				setPosition[j][1] = rand() % gameMapSize + 1;
+				/*int l = 0;
+				l++;
+				cout << setPosition[j][0];*/
+			} while (j != i && (setPosition[j][0] == setPosition[i][0] && setPosition[j][1] == setPosition[i][1]));
+		}
+	}
+	/*for (int j = 0; j < 20; j++)
+	{
+
+		cout << setPosition[j][0] << " ";
+		cout << setPosition[j][1] << endl;
+
+
+	}*/
+	for (int i = 0; i < 20; i++)	// 우물을 가운데 영역(3*3등분 기준)에 가능한 한 배치
+	{
+		if (setPosition[i][0] > gameMapSize / 3 && setPosition[i][0] < 2 * gameMapSize / 3 &&
+			setPosition[i][1] > gameMapSize / 3 && setPosition[i][1] < 2 * gameMapSize / 3)
+		{
+			wellLocation[0] = setPosition[i][0];
+			wellLocation[1] = setPosition[i][1];
+			for (int j = i; j < 19; j++)
+			{
+				setPosition[j][0] = setPosition[j + 1][0];
+				setPosition[j][1] = setPosition[j + 1][1];
+			}
+			setPosition[19][0] = 0;
+			setPosition[19][1] = 0;
+			break;
+		}
+		else if (i == 19)
+		{
+			wellLocation[0] = setPosition[i][0];
+			wellLocation[1] = setPosition[i][1];
+		}
+	}
+
+	for (int i = 0; i < 1 + gamesTalactiteCount + gameJewelryCount + gameItemCount; i++)	// 랜덤좌표를 각 요소에 대입 (gameEscapePosition, gamesTalactitePosition, gameJewelryPosition, gameItemPosition)
+	{
+		if (i == 0)
+		{
+			gameEscapePosition[0] = setPosition[i][0];
+			gameEscapePosition[1] = setPosition[i][1];
+		}
+		else if (i >= 1 && i <= gamesTalactiteCount)
+		{
+			gamesTalactitePosition[i - 1][0] = setPosition[i][0];
+			gamesTalactitePosition[i - 1][1] = setPosition[i][1];
+		}
+		else if (i > gamesTalactiteCount && i <= gamesTalactiteCount + gameJewelryCount)
+		{
+			gameJewelryPosition[i - (gamesTalactiteCount + 1)][0] = setPosition[i][0];
+			gameJewelryPosition[i - (gamesTalactiteCount + 1)][1] = setPosition[i][1];
+			//보석 점수 설정
+			gameJewelryScore[i - (gamesTalactiteCount + 1)] = gameJewelryBasicSocre[rand() % 3];
+		}
+		else if (i > gamesTalactiteCount + gameJewelryCount && i <= gamesTalactiteCount + gameJewelryCount + gameItemCount)
+		{
+			gameItemPosition[i - (gamesTalactiteCount + gameJewelryCount + 1)][0] = setPosition[i][0];
+			gameItemPosition[i - (gamesTalactiteCount + gameJewelryCount + 1)][1] = setPosition[i][1];
+		}
+	}
+
+	// 최소 이동거리
+	gamePlayerChance = (wellLocation[0] + wellLocation[1]) + 7;
+
+	////탈출 위치 지정
+	//bool isExitPossibile = true;
+	//do {
+	//	srand(time(NULL));
+	//	gameEscape[0] = rand() % (gameMapSize / 2) + gameMapSize / 2; // 시작 지점으로부터 먼 쪽에 랜덤으로 생기도록 지정
+	//	gameEscape[1] = rand() % (gameMapSize / 2) + gameMapSize / 2;
+
+	//	//플레이어 초기위치 판별
+	//	/*if ((gameEscape[0] == 1 && gameEscape[1] == 1))
+	//		isExitPossibile = false;*/
+
+	//} while (!isExitPossibile);
+
+	//// 우물 위치 지정
+	//isExitPossibile = true;
+	//do {
+	//	srand(time(NULL));
+	//	wellLocation[0] = rand() % (gameMapSize / 3) + gameMapSize / 3 + 1; // 맵 가운데를 영역으로 하여 되도록 겹치지 않도록 지정
+	//	wellLocation[1] = rand() % (gameMapSize / 3) + gameMapSize / 3 + 1;
+
+	//	// 탈출 위치 판별
+	//	if ((wellLocation[0] == 1 && wellLocation[1] == 1) || (gameEscape[0] == wellLocation[0] && gameEscape[1] == wellLocation[1]))
+	//		isExitPossibile = false;
+
+	//} while (!isExitPossibile);
+	//// 최소 이동거리
+	//gamePlayerChance = (wellLocation[0] + wellLocation[1]) + 7;
+
+	////종유석 위치
+	//for (int i = 0; i < gamesTalactiteCount; i++) {
+	//	bool isStalactitePossible = true;
+	//					
+	//	do {
+	//		isStalactitePossible = true;
+	//		srand(time(NULL));
+	//		gamesTalactitePosition[i][0] = wellLocation[0] + rand() % (2 * gameMapSize / 3); // 우물 위치를 기준으로 우물과 탈출 지점 사이 거리의 범위에 위치를 지정 - 우물과 겹치지 않게
+	//		gamesTalactitePosition[i][1] = wellLocation[1] + rand() % (2 * gameMapSize / 3);
+
+	//		//우물 위치 판별
+	//		if (gamesTalactitePosition[i][0] == wellLocation[0] && gamesTalactitePosition[i][1] == wellLocation[1])
+	//			isStalactitePossible = false;
+
+	//		//탈출 위치 판별
+	//		if (gamesTalactitePosition[i][1] == gameEscape[1] && gamesTalactitePosition[i][0] == gameEscape[0])
+	//			isStalactitePossible = false;
+
+	//		for (int j = 0; j < i; j++) {
+	//			if (gamesTalactitePosition[j][0] == gamesTalactitePosition[i][0] &&
+	//				gamesTalactitePosition[j][1] == gamesTalactitePosition[i][1]) {
+	//				//만약 종유석 위치와 겹친다면
+	//				isStalactitePossible = false;
+	//				break;
+	//			}
+	//		}
+	//	} while (!isStalactitePossible);
+	//	//종유석의 위치가 플레이어/탈출 위치/벽/다른 종유석/시아 위치가 아닐 경우 저장 완료.
+	//}
+
+	////보석 위치
+	//for (int i = 0; i < gameJewelryCount; i++) {
+
+	//	bool isJewelryPossible = true;
+	//	do {
+	//		isJewelryPossible = true;
+
+	//		srand(time(NULL));
+	//		gameJewelryPosition[i][0] = gamesTalactitePosition[i][0] + (rand() % (gameMapSize / 10) + 1); // 종유석 위치를 기준으로 위치를 지정 - 종유석과 겹치지 않게
+	//		gameJewelryPosition[i][1] = gamesTalactitePosition[i][0] + (rand() % (gameMapSize / 10) + 1);
+
+	//		if (gamesTalactitePosition[i][0] == wellLocation[0] && gamesTalactitePosition[i][1] == wellLocation[1])
+	//			isJewelryPossible = false;
+
+	//		if (gameJewelryPosition[i][1] == gameEscape[1] && gameJewelryPosition[i][0] == gameEscape[0])
+	//			isJewelryPossible = false;
+
+	//		for (int j = 0; j < gamesTalactiteCount; j++) {
+	//			if (gameJewelryPosition[i][0] == gamesTalactitePosition[j][0] &&
+	//				gameJewelryPosition[i][1] == gamesTalactitePosition[j][1]) {
+	//				//만약 종유석 위치와 겹친다면
+	//				isJewelryPossible = false;
+	//				break;
+	//			}
+	//		}
+
+	//		for (int j = 0; j < i; j++) {
+	//			if (gameJewelryPosition[j][0] == gameJewelryPosition[i][0] &&
+	//				gameJewelryPosition[j][1] == gameJewelryPosition[i][1]) {
+	//				//만약 보석 위치와 겹친다면
+	//				isJewelryPossible = false;
+	//				break;
+	//			}
+	//		}
+	//	} while (!isJewelryPossible);
+	//	//보석의 위치가 플레이어/탈출 위치/벽/다른 종유석/시아 위치가 아닐 경우 저장 완료.
+
+	//	//보석 점수 설정
+	//	srand(time(NULL));
+	//	gameJewelryScore[i] = gameJewelryBasicSocre[rand() % 3];
+
+	//}
+
+
+	////아이템 위치
+	//for (int i = 0; i < gameItemCount; i++) {
+
+	//	bool isItemPossible = true;
+	//	do {
+	//		isItemPossible = true;
+
+	//		srand(time(NULL));
+	//		gameItem[i][0] = wellLocation[0] + (rand() % (gameMapSize / 5) + 1); // 우물 위치를 기준으로 위치를 지정 - 우물과 겹치지 않게
+	//		gameItem[i][1] = wellLocation[0] + (rand() % (gameMapSize / 5) + 1);
+
+	//		// 우물 위치 판별
+	//		if (gameItem[i][0] == wellLocation[0] && gameItem[i][1] == wellLocation[1])
+	//			isItemPossible = false;
+
+	//		//탈출 판별
+	//		if (gameItem[i][1] == gameEscape[1] && gameItem[i][0] == gameEscape[0])
+	//			isItemPossible = false;
+
+	//		//종유석 판별
+	//		for (int j = 0; j < gamesTalactiteCount; j++) {
+	//			if (gameItem[i][0] == gamesTalactitePosition[j][0] &&
+	//				gameItem[i][1] == gamesTalactitePosition[j][1]) {
+	//				//만약 종유석 위치와 겹친다면
+	//				isItemPossible = false;
+	//				break;
+	//			}
+	//		}
+
+	//		//보석 판별
+	//		for (int j = 0; j < gameJewelryCount; j++) {
+	//			if (gameItem[i][0] == gameJewelryPosition[j][0] &&
+	//				gameItem[i][1] == gameJewelryPosition[j][1]) {
+	//				//만약 보석 위치와 겹친다면
+	//				isItemPossible = false;
+	//				break;
+	//			}
+	//		}
+
+	//		//아이템 판별
+	//		for (int j = 0; j < i; j++) {
+	//			if (gameItem[i][0] == gameJewelryPosition[j][0] &&
+	//				gameItem[i][1] == gameJewelryPosition[j][1]) {
+	//				//만약 아이템 위치와 겹친다면
+	//				isItemPossible = false;
+	//				break;
+	//			}
+	//		}
+	//	} while (!isItemPossible);
+	//	//아이템의 위치가 플레이어/탈출 위치/벽/다른 종유석/시야 위치가 아닐 경우 저장 완료.
+	//}
+
+
+	//초기 화면
+
+	// gameMap 초기화
+	for (int j = 0; j < gameMapSize + 2; j++) // map
+	{
+		for (int i = 0; i < gameMapSize + 2; i++) // map
+		{
+			(i == 0 || j == 0 || i == gameMapSize + 1 || j == gameMapSize + 1) ? gameMap[j][i] = '*' : gameMap[j][i] = '='; // map
+		}
+	}
+
+	// 플레이어 위치 업로드
+	gameMap[gamePlayerPosition[0]][gamePlayerPosition[1]] = 'O';
+
+	// 플레이어 시야 지정 // sight
+	for (int i = -1 * gameSight; i < gameSight + 1; i++) {
+		for (int j = -1 * gameSight; j < gameSight + 1; j++) {
+			if (gameMap[gamePlayerPosition[0] + i][gamePlayerPosition[1] + j] == '=')
+				gameMap[gamePlayerPosition[0] + i][gamePlayerPosition[1] + j] = ' ';
+		}
+	}
+
+	//우물 위치 지정
+	if (gameMap[wellLocation[0]][wellLocation[1]] == ' ')
+		gameMap[wellLocation[0]][wellLocation[1]] = well;
+
+	// 탈출지점(gameEscape) 지정
+	if (gameMap[gameEscapePosition[0]][gameEscapePosition[1]] == ' ')
+		gameMap[gameEscapePosition[0]][gameEscapePosition[1]] = 'E';
+
+	//종유석 지정
+	for (int i = 0; i < gamesTalactiteCount; i++) {
+		if (gameMap[gamesTalactitePosition[i][0]][gamesTalactitePosition[i][1]] == ' ')
+			gameMap[gamesTalactitePosition[i][0]][gamesTalactitePosition[i][1]] = 'T';
+	}
+
+	//보석 지정
+	for (int i = 0; i < gameJewelryCount; i++) {
+		if (gameMap[gameJewelryPosition[i][0]][gameJewelryPosition[i][1]] == ' ')
+			gameMap[gameJewelryPosition[i][0]][gameJewelryPosition[i][1]] = 'J';
+	}
+
+	//아이템 지정
+	for (int i = 0; i < gameItemCount; i++) {
+		if (gameMap[gameItemPosition[i][0]][gameItemPosition[i][1]] == ' ')
+			gameMap[gameItemPosition[i][0]][gameItemPosition[i][1]] = 'F';
+	}
+
+	// 이동 및 화면 갱신 
+	system("cls");
+	do
+	{
+		// 화면 표시
+		for (int j = 0; j < gameMapSize + 2; j++) // map
+		{
+			for (int i = 0; i < gameMapSize + 2; i++) // map
+			{
+				cout << gameMap[i][j];
+			}
+			cout << endl;
+		}
+
+		//하단 스코어, 스테미나 표시
+		cout << "stamina: " << gamePlayerChance << endl;
+		cout << "score: " << score << endl;
+		cout << "walk: " << walk << endl;
+
+		gameKey = _getch();
+
+		bool errPosition = 0; // 이동불가 에러 표시용
+
+		// 플레이어 위치 변경 (switch문)
+		switch (gameKey)
+		{
+		case 'W':
+		case 'w':
+			//끝
+			errPosition = gamePlayerPosition[1] <= 1;
+
+			if (!errPosition) {
+				//종유석 연산
+				for (int j = 0; j < gamesTalactiteCount; j++) {
+					if ((gamePlayerPosition[1] - 1) == gamesTalactitePosition[j][1] &&
+						gamePlayerPosition[0] == gamesTalactitePosition[j][0]) {
+						//만약 종유석 위치와 겹친다면
+						errPosition = true;
+						break;
+					}
+				}
+			}
+
+			if (!errPosition) {
+				gamePlayerPosition[1] -= 1;
+				gamePlayerChance--;
+				walk++;
+			}
+			break;
+		case 'A':
+		case 'a':
+			//끝
+			errPosition = gamePlayerPosition[0] <= 1;
+
+			if (!errPosition) {
+				//종유석 연산
+				for (int j = 0; j < gamesTalactiteCount; j++) {
+					if (gamePlayerPosition[1] == gamesTalactitePosition[j][1] &&
+						(gamePlayerPosition[0] - 1) == gamesTalactitePosition[j][0]) {
+						//만약 종유석 위치와 겹친다면
+						errPosition = true;
+						break;
+					}
+				}
+			}
+
+			if (!errPosition) {
+				gamePlayerPosition[0] -= 1;
+				gamePlayerChance--;
+				walk++;
+			}
+			break;
+		case 'S':
+		case 's':
+			//끝
+			errPosition = gamePlayerPosition[1] >= gameMapSize;
+
+			if (!errPosition) {
+				//종유석 연산
+				for (int j = 0; j < gamesTalactiteCount; j++) {
+					if ((gamePlayerPosition[1] + 1) == gamesTalactitePosition[j][1] &&
+						gamePlayerPosition[0] == gamesTalactitePosition[j][0]) {
+						//만약 종유석 위치와 겹친다면
+						errPosition = true;
+						break;
+					}
+				}
+			}
+			if (!errPosition) {
+				gamePlayerPosition[1] += 1;
+				gamePlayerChance--;
+				walk++;
+			}
+			break;
+		case 'D':
+		case 'd':
+			//끝
+			errPosition = gamePlayerPosition[0] >= gameMapSize;
+
+			if (!errPosition) {
+				//종유석 연산
+				for (int j = 0; j < gamesTalactiteCount; j++) {
+					if (gamePlayerPosition[1] == gamesTalactitePosition[j][1] &&
+						(gamePlayerPosition[0] + 1) == gamesTalactitePosition[j][0]) {
+						//만약 종유석 위치와 겹친다면
+						errPosition = true;
+						break;
+					}
+				}
+			}
+
+			if (!errPosition) {
+				gamePlayerPosition[0] += 1;
+				gamePlayerChance--;
+				walk++;
+			}
+			break;
+		default:
+			errPosition = 1;
+			break;
+		}
+
+		//보석 점수 수정
+		for (int j = 0; j < gameJewelryCount; j++) {
+			if (gamePlayerPosition[1] == gameJewelryPosition[j][1] &&
+				gamePlayerPosition[0] == gameJewelryPosition[j][0]) {
+				//만약 보석 위치와 겹친다면 보석의 점수 획득
+				score += gameJewelryScore[j];
+				gameJewelryPosition[j][1] = 0;
+				gameJewelryPosition[j][0] = 0;
+				break;
+			}
+		}
+
+		//아이템 획득(시아 확장)
+		for (int i = 0; i < gameItemCount; i++) {
+			if (gamePlayerPosition[0] == gameItemPosition[i][0] && gamePlayerPosition[1] == gameItemPosition[i][1]) {
+				gameSight++;
+				gameItemPosition[i][0] = NULL;
+				gameItemPosition[i][1] = NULL;
+			}
+		}
+
+		//우물 접촉(스테미너 회복)
+		if (gamePlayerPosition[1] == wellLocation[1] && gamePlayerPosition[0] == wellLocation[0]) {
+			gamePlayerChance = gameMapSize;
+		}
+
+		// gameMap 초기화
+		for (int j = 0; j < gameMapSize + 2; j++) // map
+		{
+			for (int i = 0; i < gameMapSize + 2; i++) // map
+			{
+				(i == 0 || j == 0 || i == gameMapSize + 1 || j == gameMapSize + 1) ? gameMap[j][i] = '*' : gameMap[j][i] = '='; // map
+			}
+		}
+
+		// 플레이어 위치 업로드
+		gameMap[gamePlayerPosition[0]][gamePlayerPosition[1]] = 'O';
+
+		// 플레이어 시야 지정 // sight
+		for (int i = -1 * gameSight; i < gameSight + 1; i++) {
+			for (int j = -1 * gameSight; j < gameSight + 1; j++) {
+				if (gameMap[gamePlayerPosition[0] + i][gamePlayerPosition[1] + j] == '=')
+					gameMap[gamePlayerPosition[0] + i][gamePlayerPosition[1] + j] = ' ';
+			}
+		}
+
+		//우물 위치 지정
+		if (gameMap[wellLocation[0]][wellLocation[1]] == ' ')
+			gameMap[wellLocation[0]][wellLocation[1]] = well;
+
+		// 탈출지점(gameEscape) 지정
+		if (gameMap[gameEscapePosition[0]][gameEscapePosition[1]] == ' ')
+			gameMap[gameEscapePosition[0]][gameEscapePosition[1]] = 'E';
+
+		//종유석 지정
+		for (int i = 0; i < gamesTalactiteCount; i++) {
+			if (gameMap[gamesTalactitePosition[i][0]][gamesTalactitePosition[i][1]] == ' ')
+				gameMap[gamesTalactitePosition[i][0]][gamesTalactitePosition[i][1]] = 'T';
+		}
+
+		//보석 지정
+		for (int i = 0; i < gameJewelryCount; i++) {
+			if (gameMap[gameJewelryPosition[i][0]][gameJewelryPosition[i][1]] == ' ')
+				gameMap[gameJewelryPosition[i][0]][gameJewelryPosition[i][1]] = 'J';
+		}
+
+		//아이템 지정
+		for (int i = 0; i < gameItemCount; i++) {
+			if (gameMap[gameItemPosition[i][0]][gameItemPosition[i][1]] == ' ')
+				gameMap[gameItemPosition[i][0]][gameItemPosition[i][1]] = 'F';
+		}
+
+		// 이동 한계 출력
+		errPosition == 1 ? cout << "이동 불가" << endl : cout << gameKey << "\t" << gamePlayerChance << endl;
+
+		if (gamePlayerChance == 0) // 스테미나 0 되면 게임 오버
+		{
+			gameClear = 0;
+			break;
+		}
+
+		// 화면 갱신
+		system("cls");
+
+	} while (gamePlayerPosition[0] != gameEscapePosition[0] || gamePlayerPosition[1] != gameEscapePosition[1]);
+
+	system("cls");
+	cout << "====================" << endl;
+	gameClear ? cout << "탈출에 성공했습니다." << endl : cout << "탈출에 실패했습니다." << endl;
+	cout << "score: " << score << endl;
+	cout << "walk: " << walk << endl;
+	cout << "====================" << endl;
 }
